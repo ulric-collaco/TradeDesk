@@ -16,6 +16,22 @@ A production-grade, full-stack trade order management platform built for the Pri
 
 ---
 
+## Screenshots
+
+### 1. Trading Dashboard
+![Dashboard](docs/dashboard.png)
+
+### 2. Admin Panel (RBAC & State Transitions)
+![Admin Panel](docs/admin.png)
+
+### 3. Order Entry (Drawer)
+![Order Entry](docs/new-order.png)
+
+### 4. Authentication
+![Login](docs/login.png)
+
+---
+
 ## Architecture
 
 ```mermaid
