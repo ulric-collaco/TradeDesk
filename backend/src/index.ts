@@ -14,13 +14,15 @@ app.use(
   '*',
   cors({
     origin: (origin) => {
+      if (!origin) return null;
       const allowed = [
         'http://localhost:5173',
         'http://localhost:5175',
         'https://tradedesk.vercel.app',
-        // Add your Vercel preview URLs here
       ];
-      return allowed.includes(origin ?? '') ? origin : null;
+      // Allow all Vercel preview deployments
+      if (origin.endsWith('.vercel.app')) return origin;
+      return allowed.includes(origin) ? origin : null;
     },
     allowMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type', 'Authorization'],
