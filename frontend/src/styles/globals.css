@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background:         8 8 16;
+    --foreground:         232 232 240;
+    --card:               15 15 26;
+    --card-foreground:    232 232 240;
+    --popover:            22 22 37;
+    --popover-foreground: 232 232 240;
+    --primary:            245 166 35;
+    --primary-foreground: 8 8 16;
+    --secondary:          22 22 37;
+    --secondary-foreground: 232 232 240;
+    --muted:              22 22 37;
+    --muted-foreground:   136 136 170;
+    --accent:             22 22 37;
+    --accent-foreground:  232 232 240;
+    --destructive:        239 68 68;
+    --destructive-foreground: 232 232 240;
+    --border:             42 42 64;
+    --input:              18 18 30;
+    --ring:               245 166 35;
+    --radius:             4px;
+  }
+}
+
+@layer base {
+  * {
+    border-color: rgb(var(--border));
+  }
+
+  body {
+    background-color: #080810;
+    color: #e8e8f0;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Monospace for all numeric/data content */
+  [data-mono],
+  .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #080810;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2a2a40;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #444466;
+  }
+}
+
+/* ─── Animate-in utilities ─────────────────────────────────────── */
+@keyframes animate-in-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes animate-in-slide-bottom {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation-fill-mode: both;
+  animation-duration: 150ms;
+  animation-timing-function: ease-out;
+}
+.fade-in { animation-name: animate-in-fade; }
+.slide-in-from-bottom-2 { animation-name: animate-in-slide-bottom; }

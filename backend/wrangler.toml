@@ -6,12 +6,12 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "tradedesk-db"
-database_id = "REPLACE_WITH_YOUR_D1_ID"
+database_id = "00000000-0000-0000-0000-000000000000"
 # Run: wrangler d1 create tradedesk-db
 
 [[kv_namespaces]]
 binding = "KV"
-id = "REPLACE_WITH_YOUR_KV_ID"
+id = "00000000-0000-0000-0000-000000000000"
 # Run: wrangler kv:namespace create TRADEDESK_KV
 
 [vars]

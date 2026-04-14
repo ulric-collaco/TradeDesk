@@ -1,0 +1,40 @@
+# ─── Dependencies ────────────────────────────────────────────────────────────
+node_modules/
+
+# ─── Build outputs ────────────────────────────────────────────────────────────
+dist/
+dist-ssr/
+build/
+.wrangler/
+.cache/
+
+# ─── Environment & Secrets ───────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.dev.vars
+
+# ─── Logs ────────────────────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── TypeScript ───────────────────────────────────────────────────────────────
+*.tsbuildinfo
+
+# ─── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Editor ───────────────────────────────────────────────────────────────────
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

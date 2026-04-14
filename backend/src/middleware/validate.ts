@@ -1,11 +1,12 @@
 import type { Context, Next } from 'hono';
 import type { ZodSchema, ZodError } from 'zod';
-import type { Env, AppVariables } from '../types/index';
+import type { Env } from '../types/index';
 import { errorResponse } from '../types/index';
 
 export function validate<T>(schema: ZodSchema<T>, source: 'json' | 'query' = 'json') {
   return async (
-    c: Context<{ Bindings: Env; Variables: AppVariables }>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    c: Context<{ Bindings: Env; Variables: any }>,
     next: Next
   ): Promise<Response | void> => {
     try {
@@ -32,7 +33,7 @@ export function validate<T>(schema: ZodSchema<T>, source: 'json' | 'query' = 'js
       }
 
       // Store parsed/coerced data for handler use
-      c.set('validatedBody' as never, result.data);
+      c.set('validatedBody', result.data as T);
       await next();
     } catch {
       return c.json(

@@ -7,7 +7,8 @@ import {
   getOrdersByUserId,
   getAllOrders,
 } from '../db/client';
-import type { Order, OrderQueryFilters } from '../db/client';
+import type { OrderQueryFilters } from '../db/client';
+import type { Order } from '../types/index';
 import { isValidTransition } from '../types/index';
 
 export async function createNewOrder(
