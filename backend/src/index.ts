@@ -16,6 +16,7 @@ app.use(
     origin: (origin) => {
       const allowed = [
         'http://localhost:5173',
+        'http://localhost:5175',
         'https://tradedesk.vercel.app',
         // Add your Vercel preview URLs here
       ];

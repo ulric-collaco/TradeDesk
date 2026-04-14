@@ -18,35 +18,40 @@ function createRateLimiter(config: RateLimitConfig) {
     c: Context<{ Bindings: Env; Variables: AppVariables }>,
     next: Next
   ): Promise<Response | void> => {
-    const identifier = config.keyFn(c);
-    const kvKey = `rl:${identifier}`;
-    const now = Math.floor(Date.now() / 1000);
+    try {
+      const identifier = config.keyFn(c);
+      const kvKey = `rl:${identifier}`;
+      const now = Math.floor(Date.now() / 1000);
 
-    const raw = await c.env.KV.get(kvKey);
-    let entry: RateLimitEntry = raw
-      ? (JSON.parse(raw) as RateLimitEntry)
-      : { count: 0, resetAt: now + config.windowSeconds };
+      const raw = await c.env.KV.get(kvKey);
+      let entry: RateLimitEntry = raw
+        ? (JSON.parse(raw) as RateLimitEntry)
+        : { count: 0, resetAt: now + config.windowSeconds };
 
-    // Reset window if expired
-    if (now >= entry.resetAt) {
-      entry = { count: 0, resetAt: now + config.windowSeconds };
+      // Reset window if expired
+      if (now >= entry.resetAt) {
+        entry = { count: 0, resetAt: now + config.windowSeconds };
+      }
+
+      if (entry.count >= config.limit) {
+        const retryAfter = entry.resetAt - now;
+        c.header('Retry-After', String(retryAfter));
+        return c.json(
+          errorResponse(
+            'RATE_LIMITED',
+            `Too many requests. Please wait ${retryAfter} seconds.`
+          ),
+          429
+        );
+      }
+
+      entry.count++;
+      const ttl = entry.resetAt - now;
+      await c.env.KV.put(kvKey, JSON.stringify(entry), { expirationTtl: ttl });
+    } catch (e) {
+      // KV unavailable (e.g. local dev without real KV) — fail open
+      console.warn('[rateLimit] KV error, skipping rate limiting:', e);
     }
-
-    if (entry.count >= config.limit) {
-      const retryAfter = entry.resetAt - now;
-      c.header('Retry-After', String(retryAfter));
-      return c.json(
-        errorResponse(
-          'RATE_LIMITED',
-          `Too many requests. Please wait ${retryAfter} seconds.`
-        ),
-        429
-      );
-    }
-
-    entry.count++;
-    const ttl = entry.resetAt - now;
-    await c.env.KV.put(kvKey, JSON.stringify(entry), { expirationTtl: ttl });
 
     await next();
   };

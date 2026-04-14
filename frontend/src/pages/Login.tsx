@@ -93,6 +93,18 @@ export function Login() {
             </Button>
           </form>
 
+          <div className="mt-5 p-3 border border-terminal-border/50 rounded bg-terminal-base/50 text-xs text-text-muted flex flex-col items-center gap-1">
+            <span className="font-medium text-text-secondary mb-0.5">Test Admin Account</span>
+            <button 
+              type="button"
+              onClick={() => { setEmail('admin@tradedesk.dev'); setPassword('password123'); }}
+              className="hover:text-amber transition-colors font-mono tracking-tight"
+            >
+              admin@tradedesk.dev
+            </button>
+            <span className="font-mono tracking-tight cursor-default">password123</span>
+          </div>
+
           <p className="text-center text-sm text-text-muted mt-6">
             No account?{' '}
             <Link to="/register" className="text-amber hover:underline">
